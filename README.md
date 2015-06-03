@@ -2,6 +2,14 @@
 
 MongoidCleaner with drop and truncation strategy
 
+## Why?
+
+* [database_cleaner](https://github.com/DatabaseCleaner/database_cleaner) exists
+but it don't support [MongoDB 3](https://github.com/DatabaseCleaner/database_cleaner/issues/348).
+
+* Also we discovered that droping collection is more faster than truncation
+  strategy.
+
 ## Installation
 
 Add this line to your application's Gemfile:
