@@ -112,4 +112,23 @@ describe MongoidCleaner do
       end
     end
   end
+
+  describe 'cleaning' do
+    before do
+      MongoidCleaner.strategy = 'drop', { except: %w(articles) }
+      User.create(login: 'test')
+      Article.create(title: 'test')
+    end
+
+    it 'can be called with a block' do
+      MongoidCleaner.cleaning do
+      end
+      MongoidCleaner.collections.size.must_equal 1
+    end
+
+    it 'can be called directly' do
+      MongoidCleaner.cleaning
+      MongoidCleaner.collections.size.must_equal 1
+    end
+  end
 end
