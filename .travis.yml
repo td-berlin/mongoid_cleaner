@@ -1,4 +1,6 @@
-cache: bundler
+cache:
+  - bundler
+  - apt
 before_install:
   - gem update --remote bundler
   # install the latest stable version of MongoDB
@@ -6,15 +8,6 @@ before_install:
   - 'echo "deb http://repo.mongodb.org/apt/ubuntu "$(lsb_release -sc)"/mongodb-org/3.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.0.list'
   - sudo apt-get update
   - sudo apt-get install -y mongodb-org
-  - sudo service mongodb stop
-  - sudo rm -rf /var/lib/mongodb/ && sudo mkdir /var/lib/mongodb/
-  - sudo chown -R mongodb:mongodb /var/lib/mongodb
-  - echo "storageEngine=$ENGINE" | sudo tee -a /etc/mongod.conf
-  - sudo service mongodb restart
-env:
-  matrix:
-    - ENGINE=mmapv1
-    - ENGINE=wiredtiger
 language: ruby
 rvm:
   - 2.1
