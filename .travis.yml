@@ -7,6 +7,8 @@ before_install:
   - sudo apt-get update
   - sudo apt-get install -y mongodb-org
   - sudo service mongodb stop
+  - sudo ls -la /var/lib/mongodb/
+  - sudo cat /etc/mongod.conf
   - sudo rm -rf /var/lib/mongodb/ && sudo mkdir /var/lib/mongodb/
   - sudo chown -R mongodb:mongodb /var/lib/mongodb
   - echo "storageEngine=$ENGINE" | sudo tee -a /etc/mongod.conf
