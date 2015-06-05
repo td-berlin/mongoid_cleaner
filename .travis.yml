@@ -9,7 +9,7 @@ before_install:
   - sudo service mongodb stop
   - sudo mkdir "/var/lib/mongodb/$ENGINE"
   - sudo chown mongodb:mongodb "/var/lib/mongodb/$ENGINE"
-  - sudo cat /dev/null > /etc/mongod.conf
+  - sudo su -c echo > /etc/mongod.conf
   - echo "storageEngine=$ENGINE" | sudo tee -a /etc/mongod.conf
   - echo "dbpath=/var/lib/mongodb/$ENGINE" | sudo tee -a /etc/mongod.conf
   - sudo service mongodb restart
