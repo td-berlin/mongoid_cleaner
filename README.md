@@ -1,5 +1,7 @@
 # MongoidCleaner
 
+FOOOO
+
 MongoidCleaner with drop and truncation strategy
 
 ## Why?
