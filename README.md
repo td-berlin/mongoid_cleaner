@@ -1,5 +1,7 @@
 # MongoidCleaner
 
+![Build Status](https://magnum.travis-ci.com/td-berlin/mongoid_cleaner.svg?token=1Pjyqv334JwTadXqcays&branch=master)
+
 MongoidCleaner with drop and truncation strategy
 
 ## Why?
