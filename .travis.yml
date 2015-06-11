@@ -1,29 +1,28 @@
+bundler_args: --without development --deployment --jobs=3 --retry=3
 cache:
-  - bundler
-  - apt
-before_install:
-  - gem update --remote bundler
-  # install the latest stable version of MongoDB
-  - 'sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10'
-  - 'echo "deb http://repo.mongodb.org/apt/ubuntu "$(lsb_release -sc)"/mongodb-org/3.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.0.list'
-  - sudo apt-get update
-  - sudo apt-get install -y mongodb-org
+  directories:
+    - vendor/bundle
+env:
+  matrix:
+    - MONGODB=3.0.3 CONFIG="--config /etc/mongodb-wiredtiger.conf"
+    - MONGODB=3.0.3 CONFIG=""
+before_script:
+  - sudo cp configs/mongodb-wiredtiger.conf /etc/mongodb-wiredtiger.conf
+  - wget http://fastdl.mongodb.org/linux/mongodb-linux-x86_64-${MONGODB}.tgz -O /tmp/mongodb.tgz
+  - tar -xvf /tmp/mongodb.tgz
+  - mkdir /tmp/data
+  - ${PWD}/mongodb-linux-x86_64-${MONGODB}/bin/mongod --version
+  - ${PWD}/mongodb-linux-x86_64-${MONGODB}/bin/mongod --dbpath /tmp/data --bind_ip 127.0.0.1 $CONFIG &> /dev/null &
 language: ruby
 rvm:
   - 2.1
   - 2.2
   - jruby
   - ruby-head
-  - jruby-19mode
-  - rbx-2
 matrix:
   allow_failures:
     - rvm: ruby-head
-    - rvm: jruby-19mode
-    - rvm: rbx-2
   fast_finish: true
-install:
-  - bundle install --retry=3
 script:
   - bundle exec rake
   - bundle exec rubocop
