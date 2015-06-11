@@ -1,13 +1,15 @@
-bundler_args: --without development --deployment --jobs=3 --retry=3
+sudo: false
+bundler_args: --jobs=3 --retry=3
 cache:
-  directories:
-    - vendor/bundle
+  - bundler
+before_install:
+  - gem update --remote bundler
 env:
   matrix:
-    - MONGODB=3.0.3 CONFIG="--config /etc/mongodb-wiredtiger.conf"
+    - MONGODB=3.0.3 CONFIG="--config /tmp/mongodb-wiredtiger.conf"
     - MONGODB=3.0.3 CONFIG=""
 before_script:
-  - sudo cp configs/mongodb-wiredtiger.conf /etc/mongodb-wiredtiger.conf
+  - cp configs/mongodb-wiredtiger.conf /tmp/mongodb-wiredtiger.conf
   - wget http://fastdl.mongodb.org/linux/mongodb-linux-x86_64-${MONGODB}.tgz -O /tmp/mongodb.tgz
   - tar -xvf /tmp/mongodb.tgz
   - mkdir /tmp/data
