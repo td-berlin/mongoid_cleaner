@@ -1,15 +1,22 @@
 # MongoidCleaner
 [![Build Status](https://travis-ci.org/td-berlin/mongoid_cleaner.svg)](https://travis-ci.org/td-berlin/mongoid_cleaner)
 
-MongoidCleaner with drop and truncation strategy
+MongoidCleaner is an alternative for [DatabaseCleaner](https://github.com/DatabaseCleaner/database_cleaner)
+for projects using [MongoDB](https://www.mongodb.org/) along with [Mongoid](http://mongoid.org/en/mongoid/index.html).
+Besides the `truncate` strategy, this gem also provides faster `drop` strategy.
 
 ## Why?
 
-* [database_cleaner](https://github.com/DatabaseCleaner/database_cleaner) exists
-but it don't support [MongoDB 3](https://github.com/DatabaseCleaner/database_cleaner/issues/348).
+DatabaseCleaner always served our needs well, unfortunately it didn't support [MongoDB 3 running on Wired Tiger](https://github.com/DatabaseCleaner/database_cleaner/pull/343)
+for quite some time, so we decided to build our own specialised solution.
 
-* Also we discovered that droping collection is more faster than truncation
-  strategy.
+Also, removing all the documents from a collection requires much more work: Freeing the document's storage, clearing the index entries that point to the document, etc..
+The benefit of simply dropping a collection is that it is much faster.
+
+## Possible drawbacks
+
+We haven't experienced any problems so far, but dropping a collection will also remove the collections indexes.
+Feel free to report any issues related to that.
 
 ## Installation
 
