@@ -24,13 +24,13 @@ module MongoidCleaner
       end
     end
 
-    def session
-      @session ||= Mongoid.default_session
+    def client
+      @client ||= Mongoid.default_client
     end
 
     # @return Array mongoid collections
     def collections
-      session.command(
+      client.command(
         listCollections: 1,
         filter: {
           name:
@@ -51,13 +51,13 @@ module MongoidCleaner
 
     # @return Boolean
     def drop
-      collections_with_options.each { |c| session[c].drop }
+      collections_with_options.each { |c| client[c].drop }
       true
     end
 
     # @return Boolean
     def truncate
-      collections_with_options.each { |c| session[c].find.delete_many }
+      collections_with_options.each { |c| client[c].find.delete_many }
       true
     end
 
