@@ -1,11 +1,9 @@
-$LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
-require 'mongoid_cleaner'
-
 require 'minitest/autorun'
 require 'mongoid'
+require 'mongoid_cleaner'
 
 Mongoid.configure do |config|
-  config.connect_to('mongoid-cleaner-test')
+  config.connect_to 'mongoid-cleaner-test'
 end
 
 # :nodoc:

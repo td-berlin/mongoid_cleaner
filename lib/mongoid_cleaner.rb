@@ -1,5 +1,3 @@
-require 'mongoid_cleaner/version'
-
 # MongoidCleaner base module
 module MongoidCleaner
   # strategy is unknown
@@ -24,18 +22,20 @@ module MongoidCleaner
       end
     end
 
-    def session
-      @session ||= Mongoid.default_session
+    def client
+      @client ||= Mongoid.default_client
     end
 
     # @return Array mongoid collections
     def collections
-      session.command(
+      client.command(
         listCollections: 1,
         filter: {
-          name:
-          { '$not' => /.?system\.|\$/ }
-        })['cursor']['firstBatch'].map { |c| c['name'] }
+          name: {
+            '$not' => /.?system\.|\$/
+          }
+        }
+      ).first[:cursor][:firstBatch].map { |c| c['name'] }
     end
 
     def collections_with_options
@@ -50,13 +50,13 @@ module MongoidCleaner
 
     # @return Boolean
     def drop
-      collections_with_options.each { |c| session[c].drop }
+      collections_with_options.each { |c| client[c].drop }
       true
     end
 
     # @return Boolean
     def truncate
-      collections_with_options.each { |c| session[c].find.remove_all }
+      collections_with_options.each { |c| client[c].find.delete_many }
       true
     end
 
