@@ -1,5 +1,3 @@
-require 'mongoid_cleaner/version'
-
 # MongoidCleaner base module
 module MongoidCleaner
   # strategy is unknown
