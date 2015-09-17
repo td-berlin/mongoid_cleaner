@@ -35,7 +35,8 @@ module MongoidCleaner
         filter: {
           name:
           { '$not' => /.?system\.|\$/ }
-        })['cursor']['firstBatch'].map { |c| c['name'] }
+        }
+      ).first[:cursor][:firstBatch].map { |c| c['name'] }
     end
 
     def collections_with_options
@@ -56,7 +57,7 @@ module MongoidCleaner
 
     # @return Boolean
     def truncate
-      collections_with_options.each { |c| session[c].find.remove_all }
+      collections_with_options.each { |c| session[c].find.delete_many }
       true
     end
 

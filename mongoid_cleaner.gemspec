@@ -18,8 +18,9 @@ Gem::Specification.new do |spec|
   end
   spec.require_paths = ['lib']
 
+  spec.add_runtime_dependency 'mongoid', '~> 5.0.0'
+
   spec.add_development_dependency 'bundler', '~> 1.9'
-  spec.add_development_dependency 'rake', '~> 10.0'
+  spec.add_development_dependency 'rake',    '~> 10.0'
   spec.add_development_dependency 'rubocop', '~> 0.31'
-  spec.add_dependency 'mongoid', '~> 4.0'
 end
