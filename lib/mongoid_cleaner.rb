@@ -33,8 +33,9 @@ module MongoidCleaner
       client.command(
         listCollections: 1,
         filter: {
-          name:
-          { '$not' => /.?system\.|\$/ }
+          name: {
+            '$not' => /.?system\.|\$/
+          }
         }
       ).first[:cursor][:firstBatch].map { |c| c['name'] }
     end
