@@ -8,6 +8,10 @@ module MongoidCleaner
   class << self
     attr_reader :strategy
 
+    def mongoid_version
+      @mongoid_version ||= Mongoid::VERSION.split('.').first.to_i
+    end
+
     def available_strategies
       @available_strategies ||= %w(truncate drop)
     end
@@ -28,14 +32,24 @@ module MongoidCleaner
       @session ||= Mongoid.default_session
     end
 
-    # @return Array mongoid collections
-    def collections
+    # return with mongoid 5 `Mongo::Operation::Result`
+    # return with mongoid 4 `BSON::Document`
+    def collections_filter
       session.command(
         listCollections: 1,
         filter: {
           name:
           { '$not' => /.?system\.|\$/ }
-        })['cursor']['firstBatch'].map { |c| c['name'] }
+        })
+    end
+
+    # @return Array mongoid collections names
+    def collections
+      if mongoid_version > 4
+        collections_filter.first[:cursor][:firstBatch].map { |c| c['name'] }
+      else
+        collections_filter['cursor']['firstBatch'].map { |c| c['name'] }
+      end
     end
 
     def collections_with_options
@@ -56,7 +70,11 @@ module MongoidCleaner
 
     # @return Boolean
     def truncate
-      collections_with_options.each { |c| session[c].find.remove_all }
+      if mongoid_version > 4
+        collections_with_options.each { |c| session[c].find.delete_many }
+      else
+        collections_with_options.each { |c| session[c].find.remove_all }
+      end
       true
     end
 
