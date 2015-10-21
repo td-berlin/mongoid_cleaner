@@ -3,7 +3,8 @@
 
 MongoidCleaner is an alternative for [DatabaseCleaner](https://github.com/DatabaseCleaner/database_cleaner)
 for projects using [MongoDB](https://www.mongodb.org/) along with [Mongoid](http://mongoid.org/en/mongoid/index.html).
-Besides the `truncate` strategy, this gem also provides faster `drop` strategy.
+Besides the `truncate` strategy, this gem also provides faster `drop` strategy. It runs with Mongoid versions 4 and 5.
+
 
 ## Why?
 
