@@ -29,7 +29,11 @@ module MongoidCleaner
     end
 
     def session
-      @session ||= Mongoid.default_session
+      @session ||= if mongoid_version > 4
+                     Mongoid.default_client
+                   else
+                     Mongoid.default_session
+                   end
     end
 
     # return with mongoid 5 `Mongo::Operation::Result`
