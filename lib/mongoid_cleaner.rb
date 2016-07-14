@@ -24,7 +24,7 @@ module MongoidCleaner
       if available_strategies.include? strategy
         @strategy = strategy
       else
-        fail UnknownStrategySpecified
+        raise UnknownStrategySpecified
       end
     end
 
