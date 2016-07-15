@@ -1,2 +1,6 @@
 inherit_gem:
   td_critic: rubocop.yml
+
+AllCops:
+  Exclude:
+    - '**/vendor/**/*'
