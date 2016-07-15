@@ -1,7 +1,9 @@
 sudo: false
 bundler_args: --jobs=3 --retry=3
 cache:
-  - bundler
+  directories:
+    - vendor/bundle
+    - ${HOME}/mongodb
 before_install:
   - gem update --remote bundler
 gemfile:
@@ -9,15 +11,10 @@ gemfile:
   - gemfiles/mongoid5.gemfile
 env:
   matrix:
-    - MONGODB=3.0.3 CONFIG="--config /tmp/mongodb-wiredtiger.conf"
-    - MONGODB=3.0.3 CONFIG=""
+    - MONGODB_VERSION=3.0.12 CONFIG="${TRAVIS_BUILD_DIR}/configs/mongodb-wiredtiger.conf"
+    - MONGODB_VERSION=3.0.12 CONFIG="${TRAVIS_BUILD_DIR}/configs/mongodb-mmapv1.conf"
 before_script:
-  - cp configs/mongodb-wiredtiger.conf /tmp/mongodb-wiredtiger.conf
-  - wget http://fastdl.mongodb.org/linux/mongodb-linux-x86_64-${MONGODB}.tgz -O /tmp/mongodb.tgz
-  - tar -xvf /tmp/mongodb.tgz
-  - mkdir /tmp/data
-  - ${PWD}/mongodb-linux-x86_64-${MONGODB}/bin/mongod --version
-  - ${PWD}/mongodb-linux-x86_64-${MONGODB}/bin/mongod --dbpath /tmp/data --bind_ip 127.0.0.1 $CONFIG &> /dev/null &
+  - cd "${TRAVIS_BUILD_DIR}" && ./sh/travis-before_script-mongodb.sh
 language: ruby
 rvm:
   - 2.1
