@@ -19,7 +19,7 @@ language: ruby
 rvm:
   - 2.1
   - 2.2
-  - jruby
+  - jruby-9.1.2.0
   - ruby-head
 matrix:
   allow_failures:
