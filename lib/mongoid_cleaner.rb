@@ -44,7 +44,8 @@ module MongoidCleaner
         filter: {
           name:
           { '$not' => /.?system\.|\$/ }
-        })
+        }
+      )
     end
 
     # @return Array mongoid collections names

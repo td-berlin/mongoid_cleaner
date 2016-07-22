@@ -20,7 +20,7 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency 'bundler', '~> 1.9'
   spec.add_development_dependency 'rake', '~> 11'
-  spec.add_development_dependency 'td_critic', '~> 0.4'
+  spec.add_development_dependency 'td_critic', '~> 0.5'
   spec.add_development_dependency 'rspec', '~> 3.4'
   spec.add_dependency 'mongoid', '>= 4.0'
 end
