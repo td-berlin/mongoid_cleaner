@@ -1,7 +1,5 @@
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 require 'mongoid_cleaner'
-
-require 'minitest/autorun'
 require 'mongoid'
 
 Mongoid.configure do |config|
@@ -25,4 +23,8 @@ class Article
   field :title
 end
 
-Minitest.after_run { Mongoid::Config.purge! }
+RSpec.configure do |config|
+  config.after(:suite) do
+    Mongoid::Config.purge!
+  end
+end

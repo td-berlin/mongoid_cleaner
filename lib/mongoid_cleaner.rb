@@ -24,7 +24,7 @@ module MongoidCleaner
       if available_strategies.include? strategy
         @strategy = strategy
       else
-        fail UnknownStrategySpecified
+        raise UnknownStrategySpecified
       end
     end
 
@@ -44,7 +44,8 @@ module MongoidCleaner
         filter: {
           name:
           { '$not' => /.?system\.|\$/ }
-        })
+        }
+      )
     end
 
     # @return Array mongoid collections names

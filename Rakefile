@@ -1,10 +1,9 @@
 require 'bundler/gem_tasks'
-require 'rake/testtask'
 
-task default: :test
-
-Rake::TestTask.new do |t|
-  t.libs << 'test'
-  t.test_files = FileList['test/test*.rb']
-  t.verbose = true
+begin
+  require 'rspec/core/rake_task'
+  RSpec::Core::RakeTask.new(:spec)
+  task default: :spec
+rescue LoadError => e
+  puts "No rspec available: #{e}"
 end
