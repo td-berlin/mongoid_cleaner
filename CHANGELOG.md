@@ -1,5 +1,4 @@
-
-unreleased
+1.2.1 / 2016-08-15
 ==========
 
 * Use td_critic and move to rspec instead of minitest, Laurent Arnoud <laurent.arnoud@td-berlin.com>
